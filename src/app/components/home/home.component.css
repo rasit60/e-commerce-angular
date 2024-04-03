@@ -1,0 +1,22 @@
+.search{
+    position: absolute;
+    top: 11px;
+    left: 15px;
+}
+
+li {
+    cursor: pointer;
+    user-select: none;
+}
+
+
+
+li:hover{
+    background-color: #f1f1f1;
+    color: black;
+}
+
+.active:hover{
+    background-color: #0d6efd;
+    color: white;
+}
