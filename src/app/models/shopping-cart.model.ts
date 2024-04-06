@@ -1,6 +1,8 @@
 import { CategoryModel } from "./category.models";
+import { KDVRateType } from "./product.model";
 
-export class ProductModel{
+export class shoppingCartModel{
+
     id:string="";
     imageUrl:string="";
     name:string="";
@@ -14,7 +16,3 @@ export class ProductModel{
     quantity:number=1;
 
 }
-
-export type KDVRateType=0|1|10|20;
-    
-
