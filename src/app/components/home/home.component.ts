@@ -8,71 +8,46 @@ import { ProductPipe } from "../../pipes/product.pipe";
 import { SearchComponent } from '../../common/components/search/search.component';
 import { TrCurrencyPipe } from 'tr-currency';
 import { ShoppingCartService } from '../../service/shopping-cart.service';
+import { ProductService } from '../../service/product.service';
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
-  imports: [FormsModule, CategoryPipe, CommonModule, ProductPipe, SearchComponent, TrCurrencyPipe]
+  imports: [FormsModule, CategoryPipe, CommonModule, ProductPipe, SearchComponent, TrCurrencyPipe,]
 })
 export class HomeComponent {
-  categories: CategoryModel[] = [
-    {
-      id: "1",
-      name: "Elektronik"
-    },
-    {
-      id: "2",
-      name: "Meyve & Sebze"
-    },
-    {
-      id: "3",
-      name: "Kıyafet"
-    }
-  ];
-
-  products: ProductModel[] = [
-    {
-      id: "1",
-      imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfFFXV4zCJybOFvocqAKKkko37SsPbl9F66Q&usqp=CA",
-      name: "Grundig Pc 2560 B1",
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      price: 12650,
-      discountedPrice: 11999,
-      stock: 5,
-      kdvRate: 20,
-      categoryId: "1",
-      category: {
-        id: "1",
-        name: "Elektronik"
-      },
-      quantity: 1
-    },
-    {
-      id: "2",
-      imageUrl: "https://m.media-amazon.com/images/I/61ujQL9JflL._AC_SX679_.jpg",
-      name: "Columbia Delta Ridge™ Down Erkek Mont",
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      price: 11550,
-      discountedPrice: 10999,
-      stock: 10,
-      kdvRate: 20,
-      categoryId: "3",
-      category: {
-        id: "3",
-        name: "Kıyafet"
-      },
-      quantity: 1
-    }
-
-  ]
-
+  categories: CategoryModel[] = [];
+  numbers: number[] = [1,2,3,4]
   categorySearch: string = ""
   selectedCategoryId: string = ""
   productSearch: string = ""
-  constructor(private cart: ShoppingCartService) { }
+  constructor(public cart: ShoppingCartService, public _product: ProductService) {
+    setTimeout(() => {
+      this.seedData();
+    }, 3000);
+  }
 
+  seedData() {
+    this.categories = [
+      {
+        id: "1",
+        name: "Elektronik"
+      },
+      {
+        id: "2",
+        name: "Meyve & Sebze"
+      },
+      {
+        id: "3",
+        name: "Kıyafet"
+      }
+
+
+    ]
+  };
 
   selectCategory(id: string) {
     this.selectedCategoryId = id;
@@ -92,8 +67,8 @@ export class HomeComponent {
   }
 
   addShopingCart(product: ProductModel) {
-    const productModel = {...product}
-    const model = this.cart.shoppingCarts.find((p) =>  p.id === product.id );
+    const productModel = { ...product }
+    const model = this.cart.shoppingCarts.find((p) => p.id === product.id);
     if (model === undefined) {
       this.cart.shoppingCarts.push(productModel);
     } else {
